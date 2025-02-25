@@ -78,10 +78,7 @@ export default function LoginForm({ onSave }: Props) {
             </FormItem>
           )}
         />
-        <Button
-          type="submit"
-          className="bg-blue-500 font-bold text-white mt-4 w-full hover:bg-blue-600 transition-colors"
-        >
+        <Button type="submit" className="btn-primary w-full">
           Login
         </Button>
       </form>
