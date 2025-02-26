@@ -24,7 +24,7 @@ const formSchema = z.object({
 export type LoginFormData = z.infer<typeof formSchema>
 
 type Props = {
-  onSave: () => void
+  onSave: ({ email, password }: { email: string; password: string }) => void
 }
 
 export default function LoginForm({ onSave }: Props) {

@@ -4,10 +4,7 @@ import { useQuery } from 'react-query'
 
 export const useGetMyListings = () => {
   const getMyListings = async (): Promise<UserListing[]> => {
-    console.log(api.defaults)
     const { data } = await api.get('/listing')
-    console.log(data)
-
     return data
   }
 
@@ -19,6 +16,7 @@ export const useGetMyListings = () => {
 
   if (error) {
     console.error(error)
+    // TODO: use toast
   }
 
   return { listings, isLoading }
