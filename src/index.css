@@ -15,5 +15,5 @@
 }
 
 .btn-primary {
-  @apply bg-blue-500 font-bold text-white hover:bg-blue-600 transition-colors uppercase tracking-wider;
+  @apply bg-blue-500 font-bold text-white hover:bg-blue-600 transition-colors uppercase tracking-wider !important;
 }

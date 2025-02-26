@@ -1,4 +1,6 @@
 import { useGetMyListings } from '@/api/ListingApi'
+import RegisterListingDialog from '@/components/dialogs/RegisterListingDialog'
+import { Button } from '@/components/ui/button'
 
 export default function HomePage() {
   const { listings, isLoading } = useGetMyListings()
@@ -16,6 +18,10 @@ export default function HomePage() {
       {listings.map((listing) => (
         <div key={listing.id}>{listing.listing.url}</div>
       ))}
+      <br />
+      <RegisterListingDialog>
+        <Button>Register listing</Button>
+      </RegisterListingDialog>
     </div>
   )
 }
