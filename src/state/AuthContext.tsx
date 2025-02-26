@@ -1,6 +1,7 @@
+import React, { createContext, useEffect, useState } from 'react'
+
 import { api } from '@/api'
 import { User } from '@/types/User'
-import React, { createContext, useEffect, useState } from 'react'
 
 const AuthContext = createContext<any>(null)
 
@@ -18,12 +19,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(false)
   }, [])
 
-  const loginUser = (userData: any) => {
+  const loginUser = (userData: User) => {
     setUser(userData)
   }
 
   const logout = () => {
     setUser(null)
+    api.defaults.headers.common.Authorization = ''
+    localStorage.removeItem('user')
   }
 
   return (
