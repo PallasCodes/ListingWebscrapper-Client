@@ -6,6 +6,7 @@ import { Toaster } from 'sonner'
 
 import './index.css'
 import AppRoutes from './AppRoutes.tsx'
+import { AuthProvider } from './state/AuthContext'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false } },
@@ -14,7 +15,9 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById('root')!).render(
   <Router>
     <QueryClientProvider client={queryClient}>
-      <AppRoutes />
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
       <Toaster visibleToasts={1} position="top-right" richColors />
     </QueryClientProvider>
   </Router>,
