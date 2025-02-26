@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import { Toaster } from 'sonner'
 
 import './index.css'
-import AppRoutes from './AppRoutes.tsx'
+import AppRoutes from './route/AppRoutes.tsx'
 import { AuthProvider } from './state/AuthContext'
 
 const queryClient = new QueryClient({

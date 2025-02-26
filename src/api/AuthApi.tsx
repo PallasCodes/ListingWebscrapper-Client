@@ -18,11 +18,13 @@ export const useLogin = () => {
   }): Promise<void> => {
     try {
       const { data } = await api.post('/auth/login', { email, password })
-      navigate('/')
+
       api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
       const user = JSON.stringify(data)
       localStorage.setItem('user', user)
       loginUser(data)
+
+      navigate('/')
     } catch (error: any) {
       if (error.response?.data?.message) {
         toast.error(error.response.data.message)
