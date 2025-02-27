@@ -1,5 +1,6 @@
 import { useGetMyListings } from '@/api/ListingApi'
 import RegisterListingDialog from '@/components/dialogs/RegisterListingDialog'
+import ListingCard from '@/components/ListingCard'
 import { Button } from '@/components/ui/button'
 
 export default function HomePage() {
@@ -22,8 +23,10 @@ export default function HomePage() {
 
   return (
     <div>
-      {listings.map((listing) => (
-        <div key={listing.id}>{listing.listing.url}</div>
+      {listings.map((userListing) => (
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-6xl">
+          <ListingCard key={userListing.id} listing={userListing.listing} />
+        </div>
       ))}
       <br />
       <RegisterListingDialog>

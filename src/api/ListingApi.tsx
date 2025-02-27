@@ -13,8 +13,7 @@ export const useGetMyListings = () => {
   const { data: listings, isLoading, error } = useQuery('fetchMyListings', getMyListings)
 
   if (error) {
-    console.error(error)
-    // TODO: use toast
+    toast.error(error.toString() || 'There was an error while fecthing your listings')
   }
 
   return { listings, isLoading }
@@ -29,7 +28,7 @@ export const useRegisterListing = () => {
     } catch (error: any) {
       throw new Error(
         error.response?.data?.message ||
-          'There was an error while registering the  listing. Try again later',
+          'There was an error while registering the listing. Try again later',
       )
     }
   }
