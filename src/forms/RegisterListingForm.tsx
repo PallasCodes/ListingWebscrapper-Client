@@ -20,29 +20,30 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { OriginWebsitesCat } from '@/types/OriginWebsites'
+import { updateFrequency } from '@/types/UpdateFrequency'
 
 const formSchema = z.object({
   url: z.string().url('Invalid URL').nonempty('URL is required'),
   website: z.string().nonempty('Website is required'),
-  updateFrequency: z.string().nonempty('UpdateFrecuency is required'),
+  updateFrequency: z.number().min(1, 'updateFrequency is required'),
 })
 
 export type RegisterListingFormData = z.infer<typeof formSchema>
 
 type Props = {
-  onSave: ({ email, password }: { email: string; password: string }) => void
+  onSave: (payload: RegisterListingFormData) => void
+  isLoading: boolean
 }
 
-export default function RegisterListingForm({ onSave }: Props) {
+export default function RegisterListingForm({ onSave, isLoading }: Props) {
   const form = useForm<RegisterListingFormData>({
     resolver: zodResolver(formSchema),
-    defaultValues: { url: '', website: '', updateFrequency: '' },
+    defaultValues: { url: '', website: '', updateFrequency: 24 },
   })
 
   return (
     <Form {...form}>
-      {/* <form onSubmit={form.handleSubmit(onSave)}> */}
-      <form>
+      <form onSubmit={form.handleSubmit(onSave)}>
         <FormField
           control={form.control}
           name="url"
@@ -71,8 +72,8 @@ export default function RegisterListingForm({ onSave }: Props) {
                 </FormControl>
                 <SelectContent className="bg-white">
                   {OriginWebsitesCat.map((website) => (
-                    <SelectItem key={website} value={website}>
-                      {website}
+                    <SelectItem key={website.value} value={website.value}>
+                      {website.text}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -81,9 +82,49 @@ export default function RegisterListingForm({ onSave }: Props) {
             </FormItem>
           )}
         />
-        <Button type="submit" className="btn-primary w-full">
-          Add Listing
-        </Button>
+
+        <FormField
+          control={form.control}
+          name="updateFrequency"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Update Frequency (hours)</FormLabel>
+              <Select
+                onValueChange={(value) => field.onChange(Number(value))}
+                defaultValue={field.value?.toString()}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select frequency" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent className="bg-white">
+                  {updateFrequency.map((frequency) => (
+                    <SelectItem
+                      className="cursor-pointer hover:bg-red-500 w-full block"
+                      key={frequency.toString()}
+                      value={frequency.toString()}
+                    >
+                      {frequency.toString()}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {!isLoading && (
+          <Button type="submit" className="btn-primary w-full">
+            Add Listing
+          </Button>
+        )}
+        {isLoading && (
+          <Button disabled className="btn-primary w-full">
+            Loading...
+          </Button>
+        )}
       </form>
     </Form>
   )

@@ -10,7 +10,14 @@ export default function HomePage() {
   }
 
   if (!listings || listings.length === 0) {
-    return <p>No listings found</p>
+    return (
+      <div>
+        <p>No listings found</p>
+        <RegisterListingDialog>
+          <Button>Register listing</Button>
+        </RegisterListingDialog>
+      </div>
+    )
   }
 
   return (
